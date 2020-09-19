@@ -1,0 +1,35 @@
+{
+  "name": "@maxevan9/react-useformstate",
+  "version": "1.0.0",
+  "description": "A really easy and flexible way to manage from state in React.",
+  "main": "src/index.ts",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaxEvan/react-useformstate.git"
+  },
+  "keywords": [
+    "react",
+    "hook",
+    "form"
+  ],
+  "author": {
+    "name": "Makara Sok",
+    "email": "makara.aktee.sok@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Maxime Evangeliste",
+      "email": "max.evangeliste@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MaxEvan/react-useformstate/issues"
+  },
+  "homepage": "https://github.com/MaxEvan/react-useformstate#readme",
+  "dependencies": {
+    "@types/react": "^16.9.49",
+    "react": "^16.13.1"
+  }
+}

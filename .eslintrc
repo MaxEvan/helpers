@@ -1,0 +1,38 @@
+{
+  "parser": "babel-eslint",
+  "plugins": ["react"],
+  "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
+  "env": {
+    "es6": true,
+    "node": true,
+    "jest": true,
+    "browser": true
+  },
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "detect"
+    }
+  },
+  "rules": {
+    "brace-style": ["warn", "1tbs"],
+    "camelcase": ["off", { "properties": "never" }],
+    "constructor-super": "warn",
+    "keyword-spacing": "warn",
+    "no-console": ["off"],
+    "no-const-assign": "warn",
+    "no-this-before-super": "warn",
+    "no-trailing-spaces": "warn",
+    "no-unreachable": "warn",
+    "no-unused-vars": "warn",
+    "react/no-unescaped-entities": 0,
+    "react/prop-types": [1],
+    "semi": ["warn", "always"],
+    "space-before-blocks": "warn",
+    "space-infix-ops": "warn",
+    "valid-typeof": "warn"
+  },
+  "globals": {
+    "React": "writable"
+  }
+}
