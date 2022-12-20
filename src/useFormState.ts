@@ -117,7 +117,7 @@ export const useFormState = (_initialState: State): [State, Methods] => {
       type: 'email',
       name,
       get value() {
-        return values[name] || '';
+        return values?.[name] || '';
       },
       onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
         setValue(name, event.target.value);
@@ -132,7 +132,7 @@ export const useFormState = (_initialState: State): [State, Methods] => {
       name,
       value,
       get checked() {
-        return values[name] === value;
+        return values?.[name] === value;
       },
       onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
         setValue(name, event.target.value);
@@ -150,14 +150,14 @@ export const useFormState = (_initialState: State): [State, Methods] => {
       value,
       get checked() {
         if (isArray) {
-          return (values[name] || []).includes(value);
+          return (values?.[name] || []).includes(value);
         }
 
-        return values[name] || false;
+        return values?.[name] || false;
       },
       onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
         if (isArray) {
-          const copy = [...(values[name] ?? [])];
+          const copy = [...(values?.[name] ?? [])];
 
           if (event.target.checked) {
             copy.push(value);
@@ -186,7 +186,7 @@ export const useFormState = (_initialState: State): [State, Methods] => {
     return {
       name,
       get value() {
-        return values[name];
+        return values?.[name];
       },
       onChange: (value: State) => {
         setValue(name, value);
