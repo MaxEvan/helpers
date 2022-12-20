@@ -1,5 +1,30 @@
-import { useState, useCallback } from 'react';
-import { State, Methods, OptionsProp } from 'types';
+import { useCallback, useState } from 'react';
+
+export type State = {
+  [key: string]: any;
+};
+
+type MethodNames =
+  | 'email'
+  | 'text'
+  | 'radio'
+  | 'checkbox'
+  | 'select'
+  | 'raw'
+  | 'setFormState'
+  | 'clear'
+  | 'setInitialState'
+  | 'dirty'
+  | 'touched';
+
+export type Methods = {
+  [key in MethodNames]: any;
+};
+
+export type OptionsProp = {
+  onChange: Function;
+  [key: string]: any;
+};
 
 export const useFormState = (_initialState: State): [State, Methods] => {
   const [initialState, _setInitialState] = useState<State>(_initialState);
@@ -52,14 +77,14 @@ export const useFormState = (_initialState: State): [State, Methods] => {
     [initialState]
   );
 
-  const setInitialState = useCallback((state) => {
+  const setInitialState = useCallback((state: State) => {
     _setInitialState(state);
     setValues(state);
     setDirtyItems(new Set());
     setTouchedItems(new Set());
   }, []);
 
-  const clear = useCallback((name) => {
+  const clear = useCallback((name: string) => {
     setValues((state) => ({
       ...state,
       [name]: '',
@@ -73,6 +98,23 @@ export const useFormState = (_initialState: State): [State, Methods] => {
     const { onChange } = options;
 
     return {
+      type: 'text',
+      name,
+      get value() {
+        return values?.[name] || '';
+      },
+      onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+        setValue(name, event.target.value);
+        onChange && onChange(event);
+      },
+    };
+  };
+
+  const email = (name: string, options = {} as OptionsProp) => {
+    const { onChange } = options;
+
+    return {
+      type: 'email',
       name,
       get value() {
         return values[name] || '';
@@ -158,13 +200,14 @@ export const useFormState = (_initialState: State): [State, Methods] => {
     {
       // Input types methods
       text,
+      email,
       radio,
       checkbox,
       select: text,
       raw,
 
       // Direct access methods
-      setValue,
+      setFormState: setValue,
       clear,
       setInitialState,
       dirty,
