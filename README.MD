@@ -1,10 +1,3 @@
-# react-useformstate
+# React + TS helpers
 
-A really easy and flexible way to manage from state in React.
-
-## Roadmap
-
-- Make a better README.
-- Make tests.
-- Make a logo.
-- Write a blog post about it.
+[useFormState](./src/useState.ts) is a hook to make form state handling trivial in react.
