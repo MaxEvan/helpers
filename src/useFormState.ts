@@ -6,16 +6,19 @@ export type State = {
 
 type MethodNames =
   | 'email'
+  | 'number'
   | 'text'
   | 'radio'
   | 'checkbox'
   | 'select'
   | 'raw'
-  | 'setFormState'
+  | 'setValue'
   | 'clear'
   | 'setInitialState'
   | 'dirty'
-  | 'touched';
+  | 'isDirty'
+  | 'touched'
+  | 'isTouched';
 
 export type Methods = {
   [key in MethodNames]: any;
@@ -31,6 +34,9 @@ export const useFormState = (_initialState: State): [State, Methods] => {
   const [values, setValues] = useState<State>(_initialState);
   const [dirty, setDirtyItems] = useState<Set<any>>(new Set());
   const [touched, setTouchedItems] = useState<Set<any>>(new Set());
+
+  const isDirty = dirty.size > 0;
+  const isTouched = touched.size > 0;
 
   const setValue = useCallback(
     (name: string, value: any, makeTouched: boolean = true, makeDirty: boolean = true) => {
@@ -105,6 +111,22 @@ export const useFormState = (_initialState: State): [State, Methods] => {
       },
       onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
         setValue(name, event.target.value);
+        onChange && onChange(event);
+      },
+    };
+  };
+
+  const number = (name: string, options = {} as OptionsProp) => {
+    const { onChange } = options;
+
+    return {
+      type: 'number',
+      name,
+      get value() {
+        return Number(values?.[name]) || undefined;
+      },
+      onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+        setValue(name, Number(event.target.value) || undefined);
         onChange && onChange(event);
       },
     };
@@ -200,6 +222,7 @@ export const useFormState = (_initialState: State): [State, Methods] => {
     {
       // Input types methods
       text,
+      number,
       email,
       radio,
       checkbox,
@@ -207,11 +230,15 @@ export const useFormState = (_initialState: State): [State, Methods] => {
       raw,
 
       // Direct access methods
-      setFormState: setValue,
+      setValue,
       clear,
       setInitialState,
       dirty,
       touched,
+
+      // Form states
+      isDirty,
+      isTouched,
     },
   ];
 };
